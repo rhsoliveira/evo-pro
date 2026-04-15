@@ -22,11 +22,8 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: evoapicloud/evolution-api
+          images: gestaomaster/evolution-api-pro
           tags: latest
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -41,7 +38,7 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v6
         with:
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
