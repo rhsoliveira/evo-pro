@@ -1,7 +1,8 @@
-FROM node:24-alpine AS builder
+FROM node:24-bookworm-slim AS builder
 
-RUN apk update && \
-    apk add --no-cache git ffmpeg wget curl bash openssl
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends git ffmpeg wget curl bash openssl ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
 
 LABEL version="2.3.1" description="Api to control whatsapp features through http requests." 
 LABEL maintainer="Davidson Gomes" git="https://github.com/DavidsonGomes"
@@ -31,10 +32,11 @@ RUN ./Docker/scripts/generate_database.sh
 
 RUN npm run build
 
-FROM node:24-alpine AS final
+FROM node:24-bookworm-slim AS final
 
-RUN apk update && \
-    apk add tzdata ffmpeg bash openssl
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends tzdata ffmpeg bash openssl ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
 
 ENV TZ=America/Sao_Paulo
 ENV DOCKER_ENV=true
