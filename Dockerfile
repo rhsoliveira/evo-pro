@@ -1,7 +1,7 @@
 FROM node:24-bookworm-slim AS builder
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends git ffmpeg wget curl bash openssl ca-certificates && \
+    apt-get install -y --no-install-recommends git ffmpeg wget curl bash openssl ca-certificates dos2unix && \
     rm -rf /var/lib/apt/lists/*
 
 LABEL version="2.3.1" description="Api to control whatsapp features through http requests." 
